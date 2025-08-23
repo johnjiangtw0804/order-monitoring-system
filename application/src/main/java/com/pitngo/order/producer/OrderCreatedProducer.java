@@ -2,10 +2,10 @@ package com.pitngo.order.producer;
 
 import com.pitngo.order.model.OrderCreatedEvent;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.stereotype.Component;
 import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 public class OrderCreatedProducer {
     private final StreamBridge streamBridge;
 
