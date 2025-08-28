@@ -22,7 +22,6 @@ services:
       - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
       - ALLOW_PLAINTEXT_LISTENER=yes
 
-
   dynamodb:
     image: amazon/dynamodb-local:2.5.2
     command: ["-jar", "DynamoDBLocal.jar", "-inMemory", "-sharedDb"]
