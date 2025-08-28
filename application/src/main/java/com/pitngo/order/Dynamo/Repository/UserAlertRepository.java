@@ -24,6 +24,6 @@ public class UserAlertRepository {
         a.setAmount(amount);
         a.setMessage("High amount order: %.2f at %s".formatted(amount, at));
 
-        table.putItem(r->r.item(a));
+        table.putItem(a);
     }
 }

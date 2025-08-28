@@ -6,7 +6,7 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 @DynamoDbBean
 public class UserStats {
     private String userId;
-    private Long orderCount;
+    private Integer orderCount;
     private Double totalAmount;
     private String updatedAt;
 
@@ -19,11 +19,11 @@ public class UserStats {
         this.userId = v;
     }
 
-    public Long getOrderCount() {
+    public Integer getOrderCount() {
         return orderCount;
     }
 
-    public void setOrderCount(Long v) {
+    public void setOrderCount(Integer v) {
         this.orderCount = v;
     }
 
