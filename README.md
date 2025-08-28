@@ -1,25 +1,36 @@
 
-# Design
+# Design Doc
 
 ```pgsql
-[User Request / Order Service]
-          │
-          ▼
-   (Spring Boot API)
-          │
-          ▼
-   Kafka (order-events topic)
-          │
-   ┌──────┴──────────────┐
-   ▼                     ▼
-[Spring Boot Consumer]   [Flink Job]
-(簡單統計+Redis存儲)     (進階分析+CEP/SQL)
-          │                     │
-          ▼                     ▼
-       Redis                Redis / Kafka
-   (user stats, alerts)     (materialized view, alerts)
-          │
-          ▼
-    Analytics REST API
-    (查詢統計 & 告警)
+          ┌─────────────────────────┐
+          │  Order Service (API)    │
+          │  Spring Boot Producer   │
+          └─────────┬──────────────┘
+                    │
+                    ▼
+              ┌───────────────┐
+              │   Kafka       │  topic: order-events
+              └─────┬─────────┘
+     ┌──────────────┴───────────────┐
+     │                              │
+     ▼                              ▼
+┌──────────────┐              ┌────────────────┐
+│ Analytics    │              │ Flink Job      │
+│ Consumer     │              │ (Streaming/CEP)│
+│ Spring Boot  │              └──────┬─────────┘
+└──────┬───────┘                     │
+       │ (fast stats)                │ (materialized views / alerts)
+       ▼                             ▼
+┌──────────────┐               ┌──────────────┐
+│   Redis      │ <──(hot)───── │  DynamoDB    │
+│ Hash/ZSet    │               │ UserStats/   │
+└──────┬───────┘               │ UserAlerts   │
+       │                        └──────┬──────┘
+       │ (serve)                       │
+       ▼                               ▼
+┌──────────────────┐           ┌──────────────────┐
+│ Analytics REST   │           │ S3 Data Lake     │
+│ Spring Boot API  │           │ (歷史查詢)        │
+└──────────────────┘           └──────────────────┘
+
 ```
