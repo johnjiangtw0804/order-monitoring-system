@@ -15,7 +15,7 @@ import software.amazon.awssdk.services.dynamodb.model.ConditionalCheckFailedExce
 public class ProcessedOrdersRepository {
     private final DynamoDbEnhancedClient ec;
 
-    public ProcessedOrdersRepository(DynamoDbEnhancedClient ec, DynamoDbClient raw) {
+    public ProcessedOrdersRepository(DynamoDbEnhancedClient ec) {
         this.ec = ec;
     }
 
